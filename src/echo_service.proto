@@ -4,14 +4,10 @@ package echo;
 
 service EchoService {
 
-    rpc Echo (EchoRequest) returns (EchoResponse) {}
+    rpc Echo (Phrase) returns (Phrase) {}
 
 }
 
-message EchoRequest {
-    string phrase = 1;
-}
-
-message EchoResponse {
-    string phrase = 2;
+message Phrase {
+    string text = 1;
 }

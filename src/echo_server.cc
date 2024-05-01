@@ -11,8 +11,7 @@ using grpc::ServerBuilder;
 using grpc::ServerUnaryReactor;
 using grpc::Status;
 using echo::EchoService;
-using echo::EchoRequest;
-using echo::EchoResponse;
+using echo::Phrase;
 
 void Usage() {
     std::cout <<
@@ -24,9 +23,9 @@ void Usage() {
 
 class EchoServiceImpl final : public EchoService::CallbackService {
   ServerUnaryReactor* Echo(CallbackServerContext* context,
-                               const EchoRequest* request,
-                               EchoResponse* response) override {
-    response->set_phrase(request->phrase());
+                               const Phrase* request,
+                               Phrase* response) override {
+    response->set_text(request->text());
 
     ServerUnaryReactor* reactor = context->DefaultReactor();
     reactor->Finish(Status::OK);
