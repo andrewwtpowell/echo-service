@@ -7,4 +7,6 @@ find_package(Protobuf CONFIG REQUIRED)
 find_package(gRPC CONFIG REQUIRED)
 find_package(Threads REQUIRED)
 
-add_subdirectory(src)
+add_subdirectory(server)
+add_subdirectory(client)
+add_subdirectory(proto)

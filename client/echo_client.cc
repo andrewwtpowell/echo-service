@@ -1,8 +1,10 @@
 #include <iostream>
+#include <unistd.h>
 #include <getopt.h>
 #include <string>
 #include <mutex>
 #include <condition_variable>
+#include <cstdlib>
 
 #include <grpcpp/grpcpp.h>
 #include "echo_service.grpc.pb.h"
@@ -15,9 +17,9 @@ using echo::Phrase;
 
 void Usage() {
     std::cout <<
-        "\nUSAGE: callback_server [OPTIONS]\n"
-        "-t, --target <server address>:       The server address to connect to (default: localhost:50051)\n"
-        "-h, --help:                    Show help\n\n";
+        "\nUSAGE: callback_client [OPTIONS]\n"
+        "-t, --target <server address>:     The server address to connect to (default: localhost:50051)\n"
+        "-h, --help:                        Show help\n\n";
     exit(1);
 }
 
@@ -82,13 +84,14 @@ int main(int argc, char** argv) {
         {nullptr, no_argument, nullptr, 0}
     };
 
-    char option_char;
     std::string target = "localhost:50051";
 
+    char option_char;
     while((option_char = getopt_long(argc, argv, short_opts, long_opts, nullptr)) != -1) {
         switch(option_char) {
-            case 'a':
+            case 't':
                 target = std::string(optarg);
+                std::cout << "Target server address set to " << target << "\n";
                 break;
             case 'h':
             case '?':
@@ -98,10 +101,14 @@ int main(int argc, char** argv) {
         }
     }
 
+    std::string client_msg = "Livin' off borrowed time, the clock tick faster";
+    const char *env_msg = std::getenv("ECHO_MSG");
+    if(env_msg != NULL)
+        client_msg = std::string(env_msg);
+
     EchoClient client(
             grpc::CreateChannel(target, grpc::InsecureChannelCredentials()));
-    std::string msg("Don't tell no lies bout me and I won't tell truths about you.");
-    std::cout << "Client sent: " << msg << "\n";
-    std::string reply = client.Echo(msg);
+    std::cout << "Client sent: " << client_msg << "\n";
+    std::string reply = client.Echo(client_msg);
     std::cout << "Client received: " << reply << std::endl;
 }
