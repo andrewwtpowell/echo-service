@@ -38,7 +38,7 @@ From the root directory of the project use the following command to build the se
 docker build -t echo-server -f server/Dockerfile .
 ```
 
-Alternativaly, you can pull the image from Docker Hub.
+Alternatively, you can pull the image from Docker Hub.
 ```bash
 docker image pull andrewwtpowell/echo-server
 ```
@@ -57,7 +57,7 @@ From the root directory of the project use the following command to build the cl
 docker build -t echo-client -f client/Dockerfile .
 ```
 
-Alternativaly, you can pull the image from Docker Hub.
+Alternatively, you can pull the image from Docker Hub.
 ```bash
 docker image pull andrewwtpowell/echo-client
 ```
