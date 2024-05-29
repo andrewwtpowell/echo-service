@@ -3,7 +3,7 @@
 #include <iostream>
 
 #include <grpcpp/grpcpp.h>
-#include "echo_service.grpc.pb.h"
+#include "echo-service.grpc.pb.h"
 
 using grpc::CallbackServerContext;
 using grpc::Server;
@@ -16,7 +16,7 @@ using echo::Phrase;
 void Usage() {
     std::cout <<
         "\nUSAGE: callback_server [OPTIONS]\n"
-        "-a, --address <address>:       The server address to connect to (default: localhost:50051)\n"
+        "-a, --address <address>:       The server address to connect to (default: 0.0.0.0:50051)\n"
         "-h, --help:                    Show help\n\n";
     exit(1);
 }
@@ -57,7 +57,7 @@ int main(int argc, char** argv) {
     };
 
     char option_char;
-    std::string server_address = "localhost:50051";
+    std::string server_address = "0.0.0.0:50051";
 
     while((option_char = getopt_long(argc, argv, short_opts, long_opts, nullptr)) != -1) {
         switch(option_char) {

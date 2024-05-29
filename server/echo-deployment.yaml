@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: echo-svc
+  labels:
+    app: echo-svc
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: echo-svc
+  template:
+    metadata:
+      labels:
+        app: echo-svc
+    spec:
+      containers:
+      - name: echo-svc
+        image: andrewwtpowell/echo-server
+        ports:
+        - containerPort: 50051
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: echo-svc
+spec:
+  selector:
+    app: echo-svc
+  ports:
+    - protocol: TCP
+      port: 50051
+      targetPort: 50051
+      nodePort: 32222
+  type: LoadBalancer

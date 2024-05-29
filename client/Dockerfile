@@ -34,7 +34,7 @@ RUN rm CMakeCache.txt
 RUN cmake . &&\
     make
 
-CMD ["bin/echo_client"]
 # Move binary to minimal image
-# FROM alpine
-# COPY --from=build /app/bin/echo_client /bin/echo_client
+FROM ubuntu:22.04
+COPY --from=build /app/bin/echo-client /bin/echo-client
+CMD ["bin/echo-client"]

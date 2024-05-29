@@ -7,7 +7,7 @@
 #include <cstdlib>
 
 #include <grpcpp/grpcpp.h>
-#include "echo_service.grpc.pb.h"
+#include "echo-service.grpc.pb.h"
 
 using grpc::Channel;
 using grpc::ClientContext;

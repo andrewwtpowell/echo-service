@@ -34,9 +34,8 @@ RUN rm CMakeCache.txt
 RUN cmake . &&\
     make
 
-EXPOSE 50051
-
-CMD ["bin/echo_server"]
 # Move binary to minimal image
-# FROM ubuntu:22.04
-# COPY --from=build /app/bin/echo_server /bin/echo_server
+FROM ubuntu:22.04
+COPY --from=build /app/bin/echo-server /bin/echo-server
+EXPOSE 50051
+CMD ["bin/echo-server"]
